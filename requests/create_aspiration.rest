@@ -2,5 +2,6 @@ POST http://localhost:3001/api/aspirations HTTP/1.1
 content-type: application/json
 
 {
-    "content": "This is my content"
+    "content": "This is my content",
+    "userId": 1
 }
