@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { User, Aspiration } = require("../models");
+const { User, Aspiration, Team } = require("../models");
 const { tokenExtractor } = require("../util/middleware");
 
 const isAdmin = async (req, res, next) => {
@@ -31,7 +31,19 @@ router.put("/:username", tokenExtractor, isAdmin, async (req, res) => {
 
 router.get("/", async (req, res) => {
   const users = await User.findAll({
-    include: { model: Aspiration, attributes: { exclude: ["userId"] } },
+    include: [
+      {
+        model: Aspiration,
+        attributes: { exclude: ["userId"] },
+      },
+      {
+        model: Team,
+        attributes: ["name", "id"],
+        through: {
+          attributes: [],
+        },
+      },
+    ],
   });
   res.json(users);
 });
@@ -46,9 +58,18 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  const user = await User.findByPk(req.params.id);
+  const user = await User.findByPk(req.params.id, {
+    include: {
+      model: Aspiration,
+    },
+  });
   if (user) {
     res.json(user);
+    // res.json({
+    //   username: user.username,
+    //   name: user.name,
+    //   aspiration_count: user.aspirations.length,
+    // });
   } else {
     res.status(404).end();
   }
