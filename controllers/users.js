@@ -59,20 +59,41 @@ router.post("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const user = await User.findByPk(req.params.id, {
-    include: {
-      model: Aspiration,
-    },
+    attributes: { exclude: [""] },
+    include: [
+      {
+        model: Aspiration,
+        attributes: { exclude: ["userId"] },
+      },
+      {
+        model: Aspiration,
+        as: "marked_aspirations",
+        attributes: { exclude: ["userId"] },
+        through: {
+          attributes: [],
+        },
+        include: {
+          model: User,
+          attributes: ["name"],
+        },
+      },
+    ],
   });
-  if (user) {
-    res.json(user);
-    // res.json({
-    //   username: user.username,
-    //   name: user.name,
-    //   aspiration_count: user.aspirations.length,
-    // });
-  } else {
-    res.status(404).end();
+
+  if (!user) {
+    return res.status(404).end();
   }
+
+  let teams = undefined;
+
+  if (req.query.teams) {
+    teams = await user.getTeams({
+      attributes: ["name"],
+      joinTableAttributes: [],
+    });
+  }
+
+  res.json({ ...user.toJSON(), teams });
 });
 
 module.exports = router;
