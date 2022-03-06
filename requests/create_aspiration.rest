@@ -1,7 +1,7 @@
 POST http://localhost:3001/api/aspirations HTTP/1.1
-content-type: application/json
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5vZ28iLCJpZCI6MSwiaWF0IjoxNjQ2NTY5NjM1fQ.1hpEER5kjcCsfYbqOpzhIAC2QzONzjLXZJuJCRaOOJQ
 
 {
-    "content": "This is my content",
-    "userId": 1
+    "content": "Moin, das ist mein Ziel heute."
 }

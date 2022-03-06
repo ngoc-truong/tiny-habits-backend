@@ -1,27 +1,9 @@
 const router = require("express").Router();
+const jwt = require("jsonwebtoken");
 
-const res = require("express/lib/response");
+const { tokenExtractor } = require("../util/middleware");
 const { Aspiration, User } = require("../models");
-
-const tokenExtractor = (req, res, next) => {
-  const authorization = req.get("authorization");
-
-  if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
-    try {
-      req.decodedToken = jwt.verify(authorization.substring(7), SECRET);
-    } catch {
-      res.status(401).json({ error: "token invalid" });
-    }
-  } else {
-    res.status(401).json({ error: "token missing" });
-  }
-  next();
-};
-
-const aspirationFinder = async (req, res, next) => {
-  req.aspiration = await Aspiration.findByPk(req.params.id);
-  next();
-};
+const { SECRET } = require("../util/config");
 
 router.get("/", async (req, res) => {
   const aspirations = await Aspiration.findAll({
@@ -44,9 +26,15 @@ router.post("/", tokenExtractor, async (req, res) => {
     });
     res.json(aspiration);
   } catch (error) {
+    console.log(error);
     return res.status(400).json({ error });
   }
 });
+
+const aspirationFinder = async (req, res, next) => {
+  req.aspiration = await Aspiration.findByPk(req.params.id);
+  next();
+};
 
 router.get("/:id", aspirationFinder, async (req, res) => {
   if (req.aspiration) {
