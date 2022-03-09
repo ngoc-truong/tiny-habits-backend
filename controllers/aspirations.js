@@ -2,16 +2,21 @@ const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 
 const { tokenExtractor } = require("../util/middleware");
-const { Aspiration, User } = require("../models");
+const { Aspiration, User, Behavior } = require("../models");
 const { SECRET } = require("../util/config");
 
 router.get("/", async (req, res) => {
   const aspirations = await Aspiration.findAll({
     attributes: { exclude: ["userId"] },
-    include: {
-      model: User,
-      attributes: ["name"],
-    },
+    include: [
+      {
+        model: User,
+        attributes: ["name"],
+      },
+      {
+        model: Behavior,
+      },
+    ],
   });
   res.json(aspirations);
 });

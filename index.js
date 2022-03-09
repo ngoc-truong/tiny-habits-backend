@@ -7,10 +7,12 @@ const { connectToDatabase } = require("./util/db");
 const aspirationsRouter = require("./controllers/aspirations");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
+const behaviorsRouter = require("./controllers/behaviors");
 
 app.use(express.json());
 
 app.use("/api/aspirations", aspirationsRouter);
+app.use("/api/behaviors", behaviorsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 
