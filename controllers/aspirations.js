@@ -15,6 +15,7 @@ router.get("/", async (req, res) => {
       },
       {
         model: Behavior,
+        attributes: ["id", "content"],
       },
     ],
   });
