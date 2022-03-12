@@ -10,8 +10,8 @@ Aspiration.belongsTo(User);
 
 Aspiration.hasMany(Behavior);
 Behavior.belongsTo(Aspiration);
-Aspiration.sync({ alter: true });
-Behavior.sync({ alter: true });
+// Aspiration.sync({ alter: true });
+// Behavior.sync({ alter: true });
 
 User.belongsToMany(Team, { through: Membership });
 Team.belongsToMany(User, { through: Membership });
