@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { User, Aspiration, Team } = require("../models");
+const { User, Aspiration, Team, Behavior } = require("../models");
 const { tokenExtractor } = require("../util/middleware");
 
 const isAdmin = async (req, res, next) => {
@@ -64,6 +64,9 @@ router.get("/:id", async (req, res) => {
       {
         model: Aspiration,
         attributes: { exclude: ["userId"] },
+        include: {
+          model: Behavior,
+        },
       },
       {
         model: Aspiration,
