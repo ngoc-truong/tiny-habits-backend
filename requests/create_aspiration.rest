@@ -1,7 +1,7 @@
 POST http://localhost:3001/api/aspirations HTTP/1.1
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5vZ28iLCJpZCI6MSwiaWF0IjoxNjQ2NzcyNTgyfQ.MPtatREO6z0wHYm9trTwtwe1LXls11gPWjgHRNvPVz4
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5vZ28iLCJpZCI6MSwiaWF0IjoxNjQ3NTUwNzU2fQ.RSFUS3hr3AgyMh2lPYQYdEUodKXr_HKkkAqqZ1oWkgM
 
 {
-    "content": "Eating more healthy food."
+    "content": "Improve social skills."
 }

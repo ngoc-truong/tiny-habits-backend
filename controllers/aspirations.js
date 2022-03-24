@@ -7,7 +7,7 @@ const { SECRET } = require("../util/config");
 
 router.get("/", async (req, res) => {
   const aspirations = await Aspiration.findAll({
-    attributes: { exclude: ["userId"] },
+    // attributes: { exclude: ["userId"] },
     include: [
       {
         model: User,

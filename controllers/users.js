@@ -34,7 +34,6 @@ router.get("/", async (req, res) => {
     include: [
       {
         model: Aspiration,
-        attributes: { exclude: ["userId"] },
       },
       {
         model: Team,
