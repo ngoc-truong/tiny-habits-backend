@@ -1,1 +1,1 @@
-DELETE http://localhost:3001/api/behaviors/10
+DELETE http://localhost:3001/api/aspirations/1
