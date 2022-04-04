@@ -36,4 +36,15 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  const behavior = await Behavior.findByPk(req.params.id);
+
+  if (behavior) {
+    behavior.destroy();
+    res.status(204).end();
+  } else {
+    res.status(404).end();
+  }
+});
+
 module.exports = router;

@@ -2,12 +2,11 @@ const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 
 const { tokenExtractor } = require("../util/middleware");
-const { Aspiration, User, Behavior } = require("../models");
+const { Aspiration, User, Behavior, UserAspirations } = require("../models");
 const { SECRET } = require("../util/config");
 
 router.get("/", async (req, res) => {
   const aspirations = await Aspiration.findAll({
-    // attributes: { exclude: ["userId"] },
     include: [
       {
         model: User,
@@ -52,7 +51,17 @@ router.get("/:id", aspirationFinder, async (req, res) => {
 
 router.delete("/:id", aspirationFinder, async (req, res) => {
   if (req.aspiration) {
-    await req.aspiration.destroy();
+    const user = await User.findByPk(req.aspiration.dataValues.userId);
+    const aspiration = await Aspiration.findByPk(req.aspiration.id);
+
+    await UserAspirations.destroy({
+      where: {
+        userId: user.id,
+        aspirationId: req.aspiration.id,
+      },
+    });
+
+    await aspiration.destroy();
   }
   res.status(204).end();
 });
